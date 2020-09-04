@@ -42,7 +42,7 @@ bash setup_wordpress.sh ${WP_DB_NAME} ${WP_DB_USER} ${WP_DB_PASSWORD}
 bash setup_phpmyadmin.sh this_is_my_very_secret_passphrase
 
 # Move the localhost site configuration file to Nginx
-cp localhost_conf2 /etc/nginx/sites-available/localhost
+cp localhost_conf /etc/nginx/sites-available/localhost
 
 # Move index.html to its location
 cp index.html /var/www/localhost/
