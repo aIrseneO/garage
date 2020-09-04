@@ -1,0 +1,75 @@
+# List all the running container
+docker ps
+
+# List all the container running and not running
+docker ps -a
+
+# List all the images already downloaded
+docker images
+
+# Build an image from a Dockerfile
+#	Usage: docker build [OPTIONS] PATH | URL | -
+docker build -t my_image .
+
+# Create a container if necessary and run command in a container
+#	Usage: docker run [OPTIONS] IMAGE_NAME [COMMAND] [ARG..]
+#	Usage: docker run --name CONTAINER_NAME -p HOST_PORT:CONTAINER_PORT -it
+#  	-v HOST_MACHINE_PATH:CONTAINER_PATH IMAGE_NAME [COMMAND] [ARG..]
+#			-p Publish/map the container port to the host port.
+#			-i Interactive to keep STDIN open even if not attached.
+#			-t Allocate a pseudo-TTY (Teletype), Terminal.
+#			-v Bind/link mount a volume between container and host. 
+docker run --name my_container -p 443:80 -it -v ${PWD}/.:/root/ debian:buster
+
+# Stop one or more runnig containers
+#	Usage: docker stop [OPTIONS] CONTAINER_NAME [CONTAINER_NAME...]
+docker stop my_container
+
+# Start one or more stopped containers
+#	Usage: docker start [OPTIONS] CONTAINER_NAME [CONTAINER_NAME...]
+docker start my_container
+
+# Exit a container without stoping its running proccesses
+# <ctrl + q> or close the windows
+
+# Attach local stdard input, output, and error streams to a running container
+#	Usage: docker attach [OPTIONS] CONTAINER_NAME
+docker attach my_container
+
+# Exectute a command in a running container
+#	Usage: docker exec [OPTIONS] CONTAINER_NAME COMMAND [ARG...]
+docker exec -it my_container /bin/bash
+
+# Get low-level information on Docker objects (pipe grep CMD for needed infos)
+#	Usage: docker inspect [OPTIONS] CONTAINER_NAME|ID [CONTAINER_NAME|ID...]
+docker inspect my_container # | grep can then be pipe to get the IPAddress
+
+# Kill one or more running containers
+#	Usage:	docker kill [OPTIONS] CONTAINER_NAME [CONTAINER_NAME...]
+docker kill my_container
+
+# Remove one or more containers
+#	Usage: docker rm [OPTIONS] CONTAINER_NAME [CONTAINER_NAME...]
+docker rm my_container
+
+# Remove one or more images
+#	Usage: docker rmi [OPTIONS] IMAGE_NAME [IMAGE_NAME...]
+docker rmi debian:buster
+
+# DOCKER HUB
+
+# Log in to a Docker registry. Daemon provides a default SERVER if unspecified
+#	Usage: docker login [OPTIONS] [SERVER]
+docker login #Will prompt the user for his HUB_Username, then his HUB_Password
+
+# Create a new image from a container's changes
+#	Usage:	docker commit [OPTIONS] CONTAINER_NAME [REPOSITORY[:TAG]]
+docker commit -m test my_container HUB_Username/my_container
+
+# Push an image or a repository to a registry
+#	Usage:	docker push [OPTIONS] NAME[:TAG]
+docker push HUB_Username/my_container
+
+# Log out from a Docker registry
+#	Usage:	docker logout [SERVER]
+docker logout

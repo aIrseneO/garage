@@ -1,0 +1,4 @@
+mysql-apt-config mysql-apt-config/select-server	select	mysql-5.7
+mysql-community-server mysql-server/Enter_root_password password password
+mysql-community-server mysql-server/Re-enter_root_password password password
+mysql-community-server mysql-server/Select_default_authentication_plugin select 1
