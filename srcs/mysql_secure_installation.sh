@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 SECURE_MYSQL=$(expect -c "
 set timeout 10

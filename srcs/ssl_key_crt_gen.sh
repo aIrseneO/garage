@@ -24,5 +24,4 @@ openssl req -newkey rsa:4096 \
             -nodes \
             -out /etc/ssl/private/nginx_selfsigned.crt \
             -keyout /etc/ssl/private/nginx_selfsigned.key \
-			-subj "/C=US/ST=California/L=Fremont/O=42/OU=42_SV/CN=localhost" \
-			-config ssl_key_crt_gen.conf
+			-subj "/C=US/ST=California/L=Fremont/O=42/OU=42_SV/CN=localhost"

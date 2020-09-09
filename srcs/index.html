@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome to ft_server!</title>
+	<style>
+		body {
+			width: 35em;
+			margin: 0 auto;
+			font-family: Tahoma, Verdana, Arial, sans-serif;
+			text-align: justify;
+			text-justify: inter-word;
+			line-height: 1.6;
+		}
+	</style>
+</head>
+<body>
+	<h1 style="color:chocolate;">Welcome to ft_server!</h1>
+	<p>
+		If you see this page, the nginx web server, WordPress service and
+		phpMyAdmin service are successfully installed and working.
+	</p>
+	<p>
+		Websites served by this server are:
+		<ul>
+			<li><b>WordPress.com</b>: 
+				<b style="color:peru;">https://localhost:[Port]/wordpress.com</b></li>
+			<li><b>PhpMyAdmin.com</b>:
+				<b style="color:navy;">https://localhost:[Port]/phpmyadmin.com</b></li>
+			<li><b>Crules.com</b>:
+				<b style="color:steelblue;">https://localhost:[Port]/Crules.com</b></li>
+		</ul>
+		where <b>[Port]</b> is the port mapped to the container.
+	</p>
+	<p>
+		For testing, MySQL user and password created 
+		during the setup are:<br>
+		User________: <b style="color:darkgreen;">wpdbuser</b><br>
+		Password____: <b style="color:teal;">wpdbpassword</b>
+	</p>
+	<p>
+		Further configuration setting can be found in the file
+		<b>launch_server.sh</b> located in the directory <b>src</b>.
+	</p>
+	<div>
+		<img src="img.png" alt="Illustration">
+	</div>
+	<p>
+		<b><em>Thank's for trying it out.</em></b>
+	</p>
+</body>
+<footer style="background-color:indigo;">
+    <div style="text-align:right;">
+        &copy; 2020. All rights reserved.
+    </div>
+</footer>
+</html>

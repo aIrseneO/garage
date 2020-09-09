@@ -41,6 +41,6 @@ sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = '$1'/1" \
 #chown -R user:group phpmyadmin
 
 # Move phpmyadmin to localhost
-mv -f phpmyadmin /var/www/localhost/phpmyadmin.com
+mv -f phpmyadmin /var/www/localhost/phpmyadmin
 
 #	https://phoenixnap.com/kb/how-to-install-phpmyadmin-on-debian-10

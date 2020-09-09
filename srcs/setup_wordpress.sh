@@ -29,4 +29,4 @@ sed -i "s/password_here/$3/" wordpress/wp-config.php
 #chown -R user:group wordpress
 
 # Move WordPress to localhost
-mv -f wordpress /var/www/localhost/wordpress.com
+mv -f wordpress /var/www/localhost/wordpress

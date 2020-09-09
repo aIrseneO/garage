@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="styles.css" rel="stylesheet">
+  <title>C Rules</title>
+</head>
+<body>
+<header class="fixed-top w-100">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark border border-dark rounded mx-1 shadow shadow-md">
+    <a class="navbar-brand" href="#"><div class="top">&#128187;</div></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="materials.html">Materials</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="assessment.html">Assessments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact us</a>
+        </li>
+      </ul>
+        <form class="form-inline my-2 my-md-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+  </nav>
+</header>
+
+<div>
+  <nav class="navigation">
+    <div><img src="images/img0.jpg" alt="Intro 0"></div>
+    <a class="shw" href="#c1">1. Introduction</a>
+    <a class="shw" href="#c2">2. Data types, flow control and operations</a>
+    <a href="#c21" class="pl-5 shw">2.1. Data types</a>
+    <a href="#c22" class="pl-5 shw">2.2. Flow control</a>
+    <a href="#c23" class="pl-5 shw">2.3. Operations</a>
+    <a class="shw" href="#c3">3. Aggregating data into arrays</a>
+    <a class="shw" href="#c4">4. Arrays vs. structures</a>
+    <a class="shw" href="#c5">5. Functions</a>
+    <a class="shw" href="#c6">6. Connecting to the real world: files and streams</a>
+    <a class="shw" href="#c7">7. Preprocessor and declarations</a>
+  </nav>
+  <article>
+    <div><h2 class="title shw">Programming in C<br>Rules</h2></div><br>
+    <img class="image" src="images/img1.png" alt="Intro 1"><br>
+    <div class="block shw"><h2 id="c1">1. Introduction</h2>
+    Any program we write must be error-free in these three ways: <b>lexically, syntactically and semantically.</b> 
+      <br>A complete set of well-known commands is called an <b>instruction list</b>, sometimes abbreviated to <b>IL</b>.
+      <br><b>Portability</b> is the ability of software/program to be transferred from one machine or system to another.
+      <br>The program (which in fact is just a text) is called the <b>source code</b>, or simply source, while the file that contains the source is called the <b>source file</b> and ends with the suffix "<b>.c</b>".
+      <br><b>Octal representation</b> number is preceded by the 0 digit.
+      <br><b>Hexadecimal representation</b> number is preceded by the 0x digit.
+      <br>Rules to create a <b>Variable</b>: 
+      <ul><li> must be composed of upper-case or lower-case Latin letters, digits and the character "_" (underscore which is a letter) 
+          <li> must begin with a letter 
+          <li> is case Sensitive.
+      </ul>
+    </div><br>
+    <div class="block shw"><h3 id="c2">2. Data types, flow control and operations</h3></div><br>
+    <img class="image" src="images/img2.jpg" alt="Intro 2"><br>
+    <div class="block shw"><h4 id="c21">2.1. Data types</h4>
+      The <b>types</b> (int, char, bool…) are <b>attributes</b>.<br>
+        <b>Scientific notation</b>: <samp>9e-5</samp> is equivalent to <samp>9E-5</samp>.
+        <br><b>An implementation dependent issue</b> is the second (and uglier) face of software portability, system reacts differently when we try to save a float into an integer.
+        <br><b>A loss of accuracy</b> could happen when we try to save a float into an integer.
+        <br><b>IBM</b> mainframes use a code commonly called <b>EBCDIC</b> (<b>Extended Binary Coded Decimal Interchange Code</b>) which is very different from ASCII and is based on radically different concepts.
+        <br><b>ASCII</b> : short for <b>American Standard Code for Information Interchange</b>.
+        <br><b>The literal</b> is a symbol uniquely identifies its value, the literal means itself.
+        <br><samp>\r</samp> denotes a return to the beginning of the line CR (Carriage Return).
+        <br><samp>\a</samp> as in alarm, bell. 
+        <br><samp>\0</samp> null
+        <br><samp>\n</samp> line feed;
+        <br>To create a character which value is backslash: <samp>char backslash = ‘\\‘;</samp>
+        <br>For <samp>printf("format",var)</samp> and <samp>scanf("format",var)</samp>, <b>format</b> can be:
+        <ul><li><samp>%d</samp> (as in decimal) or <samp>%i</samp> (as in integer) for a value of type int presented as a fixed-point decimal number.
+            <li> <samp>%x</samp> (as in hexadecimal) for a value of type int presented as a fixed-point hexadecimal number.
+            <br> If value is int or long, it will convert it to hex value. <samp>%02x</samp> means if your provided value is less than two digits then 0 will be prepended.
+            <li> <samp>%o</samp> (as in octal) for a value of type int presented as a fixed-point octal number.
+            <li> <samp>%c</samp> (as in char) for a value of type int or char and should be presented as a character.
+            <li> <samp>%f</samp> (as in float) for a value of type float and should be presented as a floating-point number.
+        </ul>Integer <b>modifier</b> are :<b>short</b>, <b>long long</b> and <b>unsigned</b>. The word int may be omitted in the declaration, the 2 first modifiers can be mixed with the third. With <b>char</b> only <b>unsigned</b> can be used, and with <b>float</b>, <b>long</b> (it’s similar to <b>double</b>) and <b>unsigned</b> can be used.
+        <br> For a type T which uses  Xbytes, there is <b>2^(X*8)</b> possible literals where 2 is related to 0 or 1 (binary) and 8 because <b>1byte equal 8bits</b>.
+        <br> If float uses 4bytes on a system then it has 8 precise digits the two others are for the signe and the point.
+        <br> Explicit conversions <b>typecast</b>: (type)value.
+      </div><br>
+      <div class="block shw"><h4 id="c22">2.2. Flow control</h4>
+        <b>Switch</b> and <b>If</b>:
+<pre>switch(i)
+{
+    <code>case</code> 1:
+        Statement;
+        <code>break</code>;
+    <code>case</code> 2:
+        Statement;
+        <code>break</code>;
+    ....
+    <code>case</code> n:
+        Statement;
+        <code>break</code>;
+    <code>default</code>:
+    Statement;
+}</pre>
+        If <b>break</b> is missing the nexts cases will be executed until the next break or the end.<br><br>
+<pre><code>if</code>(condition)
+{
+    statements;
+}
+<code>else if</code>(condition)
+{
+    statements;
+    ....
+}
+<code>else</code>
+{
+    statements;
+}</pre>
+        <b>Loops</b>:
+<pre><code>while</code>(conditional_expression)
+{
+    statements;
+}</pre><br>
+<pre><code>do</code>
+{
+    statements;
+} <code>while</code>(condition);</pre><br>
+<pre><code>for</code>(initialization; checking; modifying)
+{
+    statements;
+}</pre>
+        if any loop's statements is missing in for(...), it's consider 1
+        <br><b>break</b> exits the loop immediately and unconditionally ends the loop’s operation.
+        <br> <b>continue</b> ends the body or the statement step {}, and the loop’s condition is test immediately.
+      </div><br>
+      <div class="block shw"><h4 id="c23">2.3. Operations</h4>
+        There is 3 types of operators: <b>unary</b>, <b>binary</b> and <b>ternary</b>.
+        <br>In <b>i % j</b>, i and j have to be integer. <samp>0 % 5 = 0</samp>
+        <br>Logic operators: <b>&&</b> (binary and), <b>||</b> (binary or), <b>!</b> (unary negation).
+        <br>De Morgan's laws: The negation of a conjunction is the disjunction of the negations.The negation of a disjunction is the conjunction of the negation:
+        <br><b>!(p && q) == !p || !q</b>
+        <br><b>!(p || q) == !p && !q</b><br>
+        <br><b>Bitwise operators</b>:
+        <ul><li><b>&#38;</b> (ampersand) bitwise conjunction, <b>requires exactly two “1” to provide “1”</b>.
+            <li><b>|</b> (bar) bitwise disjunction, <b>requires at least one “1” to provide  “1”</b>.
+            <li><b>~</b> (tilde) bitwise negation, unary.
+            <li><b>^</b> (caret) bitwise exclusive or, <b>requires exactly one “1” to provide “1”</b>.
+            <li><b>&lt;&lt;</b> shifts left and adds zeros at the right end.
+            <li><b>&gt;&gt;</b> shifts right and adds either 0s, if value is an unsigned type, or extends the top bit (to preserve the sign) if its a signed type.
+        </ul>In <samp>i % j</samp>, i and j have to be integer and  <samp>0%j = 0</samp>.
+        <br>Operation: <b>++variable</b> / <b>--variable</b>: Increment/decrement the variable by 1 and return its new value.
+        <br>Operation: <b>variable++</b> / <b>variable--</b>: Return the original (unchanged) variable's value and then increment/decrement it by 1.
+      </div><br>
+      <div class="block shw"><h3 id="c3">3. Aggregating data into arrays</h3></div>
+      <br><img class="image" src="images/img3.jpg" alt="Intro 3"><br>
+      <div class="block shw"><p>Initialize vector: <samp>int V[5] = {1,2,3,4,5};</samp> is similar to <samp>int V[] = {1,2,3,4,5};</samp>
+      <br>Initialize array : type A[x][y][... ]  i.e. <samp>int A[2][3][2]</samp>
+      <br>Pointer declaration: <samp>int* ptr;</samp> to initialize: <samp>int *ptr = NULL;</samp> 
+      <br>To access a variable address we need the reference operator &: <samp>ptr = &#38;var;</samp> 
+      <br>Dereferencing is an operation where the pointer variable becomes synonymous with the value it points to.
+      <br>Dereferencing NULL pointers is strictly forbidden, it leads to a runtime error.
+      <br>The sizeof operator provides information on how many bytes of memory its argument occupies. 
+      <br>i.e. for an integer a: <samp>sizeof a;</samp> or <samp>sizeof(a);</samp> for the type: <samp>sizeof(char);</samp>
+      <br>when an array is declared <samp>int Arr[5];</samp> Arr is a pointer which points to the address of Arr[0]. 
+      <br>Arithmetic of pointers,  allows operations:
+      <ul><li><b>Addition</b> ptr + int return a ptr; 
+          <li><b>Soustractions</b> ptr – int return a ptr and ptr – ptr return an int ; 
+          <li><b>Comparaisons</b> ptr == ptr return 1, ptr != ptr return 0;.
+      </ul>
+      i.e. <samp>int A[3], *b, *c, d; b = A; c = A[0]; int n = b==c;</samp> then  n = 1.
+      <br>If we do <samp>b += 1; c += 2; d= b - c;</samp> then d = -1.
+      <br>In <samp>char *name = "theName";</samp> a variable of type char* named name is created and points to the string reserved by the compiler "theName".
+      <br>i.e. <samp>char *name = "theName"; char *A; A = name; name = "name2";</samp> then name equal "name2" and A equal  "theName".
+      Some built in functions: (For all of them, destination has to have an address and suffisant room otherwise the program will have a runtime error)
+      <ul><li><b>copy a string</b> <samp>char* strcpy(char* destination, char* source);</samp> return destination. 
+          <br>i.e. <samp>char dest[] = "thiswillchange"; strcpy(dest, "arsene");</samp> then dest equal arsene.
+        <li><b>copy part of a string</b> <samp>char* strncpy(char* destination, char* source, int n);</samp> return destination.
+          <br>i.e. <samp>char dest[] = thiswillchange"; strncpy(dest, "Alice has a cat", 5);</samp> then dest equal Alice.
+        <li><b>print a string</b> <samp>puts(char* str);</samp> i.e. <samp>puts("literal");</samp> return 0 if goes well and -1 if not.
+        <li><b>lenght of a string</b> <samp>int strlen(char*)</samp> i.e. <samp>char *ptr = "literal"; printf("%d",strlen(ptr));</samp> will display 7.   
+        <li><b>concatenate 2 strings</b> <samp>char* strcat(char* destination, char* source);</samp> return destination. 
+          <br>i.e. <samp>char A[20] = "I’m "; char *B =  strcat(A, "the first ");</samp> then B and A equal: I’m the first;
+          <br>destination has to be fed at least with "\0" before using this function.
+      </ul>
+    </div><br>
+    <div class="block shw"><h3 id="c4">4. Arrays vs. structures</h3></div>
+    <br><img class="image" src="images/img4.jpeg" alt="Intro 4"><br>
+    <div class="block shw"><p><samp>t[i]</samp>  is the same as <samp>i[t]</samp>.
+      <br><samp>void *ptr;</samp> is called an <b>amorphous</b> pointer.
+      <br><b>Allocate memory (bytes)</b>:
+      <br><samp>void* malloc(int size);</samp> will return <samp>NULL</samp> if allocation fails
+      <br><samp>void free(void* ptr);</samp> to free the memory allocated.
+<pre><code>int</code> *ptr;
+ptr = (<code>int</code>*)<code>malloc</code>(<code>sizeof</code>(<code>int</code>));
+<code>if</code> (ptr == <code>NULL</code>)
+{
+    <code>printf</code>("Allocation fails");
+    <code>return</code> 1;
+}
+statements;
+....
+<code>free</code>(ptr);</pre>
+        Array (rows x cols) of pointers:
+<pre><code>int</code> **arr;
+arr = (<code>int</code>**)<code>malloc</code>(rows * <code>sizeof</code>(<code>int</code>*));
+<code>for</code> (r = 0; r &lt; rows; r++)
+{
+    arr[r] = (<code>int</code> *) <code>malloc</code>(cols * <code>sizeof</code>(<code>int</code>));
+}
+statements;
+....
+<code>free</code>(arr);
+</pre><b>structure</b><pre>
+<code>struct</code> BDay
+{
+    <code>int</code> month, day, year;
+};
+<code>struct</code> Name
+{
+    <code>char</code> firstname[10], lastname[10];
+    <code>struct</code> Bday bday;
+};
+(in main)
+<code>struct</code> Name jo = {"Jo","Lee",{6,25,1995}};</pre>
+      <b>pointer to a structure:</b>
+      <br><b>Recursive</b> declaration: A structure cannot be a field of itself, but any of the structure's fields can be a pointer to the structure currently declared. This type of data is called a one-way linked list.
+<pre><code>struct</code> list
+{
+    <code>int</code> data;
+    <code>struct</code> list *next;
+};
+(in main)
+<code>struct</code> list *sptr;
+sptr = (<code>struct</code> list*)<code>malloc</code>(<code>sizeof</code>(<code>struct</code> list));
+sptr->data = 4;
+sprt->next = <code>NULL</code>;</pre>
+        <b>Union:</b>
+<pre><code>union</code> BDay
+{
+    <code>int</code> month, day, year;
+};</pre>
+      In union, only max member size is important, the size of the union is the size of the largest data type, only one member of a union can be accessed at one time, a union stores only one value (except some tricky code).
+    </div><br>
+    <div class="block shw"><h3 id="c5">5. Functions</h3></div>
+    <br><img class="image" src="images/img5.jpg" alt="Intro 5"><br>
+    <div class="block shw">
+      Predefined or library functions VS self-written functions.
+      <br> Declaration or Prototype: <samp>int function_name(void);</samp>
+      <br> Definition:
+<pre><code>int</code> function_name(<code>int</code> argument) 
+{
+    statements;
+    ....
+    <code>return</code> 0;
+}</pre>
+      The declaration has to be provided  before the first invocation occurs.
+      <br> The blocks are opaque to the declarations contained therein. Variables are local.
+      <br> A global variable is accessible to all functions in a source file.
+      <br> The function can change the actual parameters value by using references and/or pointers (which remains unchanged).
+      <br> Structures are always passed in function argument by value.
+      <br> Arrays are always passed as a pointer to the first element, as follows:
+      <br> <samp>int function_name(int *arr){...}</samp> same as <samp>int function_name(int arr[]){...}</samp>
+      <br>  Self implemented functions:
+<pre><code>int</code> mystrlen(<code>char</code> *str) 
+{
+    <code>char</code> *begin;
+    <code>for</code>(begin = str; *str; str++);
+    <code>return</code> str – begin;
+}</pre><br>
+<pre><code>char</code> *mystrcpy(<code>char</code> *dest, <code>char</code> *src)
+{
+    <code>char</code> *res;
+    <code>for</code>(res = dest; (*dest++ = *src++););
+    <code>return</code> res;
+}</pre><br>
+<pre><code>char</code> *mystrcat(<code>char</code> *dest, <code>char</code> *src)
+{
+    <code>char</code> *res;
+    <code>for</code>(res = dest; *dest++;);
+    <code>for</code>(--dest; (*dest++ = *src++););
+    <code>return</code> res;
+}</pre>
+      In a function, if the formal parameter (argument) is an array, the size of the first dimension can be disregarded; but the remaining sizes have to be provided:
+        <br> <samp>void function(arr[][4]){...}</samp>
+        <br> For allocated memory functions:
+        <br><samp>void function(int *arr[]);</samp> or <samp>void function(int **arr);</samp>
+        <br> Parametrize the main function:
+        <br><b>argc (argument counter)</b>: contains the number of arguments passed on to the program plus one;
+        <br><b>argv[] (argument values)</b>: an array of pointers to strings containing the arguments supplied to the program; argv[0] contains the name of the running program, and the rest the string passed to the program as the first argument.
+        <br> The ternary operator “<b>?:</b>”, usage:  expression1?expression2:expression3
+        <br> i.e. <samp>int i = (i > 0) ? 5 : 7;</samp> then  if i > 0 then i = 5 otherwise i = 7.
+        <br>The optimal function factorial:
+<pre><code>int</code> factorial(<code>int</code> n)
+{
+    <code>return</code> n ? n * factorial (n - 1) : 1;
+}</pre>
+    </div><br>
+    <div class="block shw"><h3 id="c6">6. Connecting to the real world: files and streams</h3></div>
+    <br><img class="image" src="images/img6.jpg" alt="Intro 6"><br>
+    <div class="block shw">In <b>Windows</b>: <samp>char* file = "C:\\directory";</samp> is same as <samp>char* file = "C:\\DIrECtORY";</samp>
+      <br>In <b>Unix\Linux</b> they are different, <b>Unix/Linux</b> is case sensitive.
+      <br>Programs written in “C” does not communicate with the files directly, but through an abstract entity called a <b>stream</b>.
+      <br>Operations on the stream affect the real files using mechanisms contained in the operating system kernel.
+      <br>The operation of connecting the stream with a file is called opening the file, while disconnecting this link is named <b>closing the file</b>.
+      <br> Opening a stream can fail due to:
+      <ul><li> the lack of a file with a specified name
+          <li> no allowance for opening an existing file
+          <li> too many streams opened simultaneously.
+      </ul> A well-written program should detect these failed openings and react accordingly.
+      <br> There are three basic modes used to open the stream: <b>read</b>, <b>write</b> and <b>update</b> (read and write):<ul>
+      <li> <samp>“r”</samp> open mode: read (must exist and for read only).
+      <li><samp>“w”</samp> open mode: write (create if non existing and destroy if exist).
+      <li><samp>“a”</samp> open mode: append (create if non existing and append if exist).
+      <li><samp>“r+”</samp> open mode: read and update (must exist and for read and write).
+      <li><samp>“w+”</samp> open mode: write and update (create if non existing and destroy if exist, read possible)
+      <li><samp>“b”</samp> binary or “t” text mode has to be associated with the others, at the end. Text mode is necessary for programs running on Windows systems, but optional for programs designed for Unix environments (in these systems there is no translation of the end line characters). By default text mode is assumed if nothing is declared.</ul>
+<pre><code>FILE</code> *file;
+file = <code>fopen</code>("path","rt");
+<code>if</code> (file == <code>NULL</code>)
+{
+    <code>printf</code>("File cannot be opened");
+    <code>return</code> 1;
+}
+statements;
+....
+<code>if</code> (<code>fclose</code>("path") == <code>EOF</code>)
+{
+    <code>printf</code>("Problem closing the file");
+    <code>return</code> 2;
+}</pre>
+      When the program runs three streams are opened (<samp>FILE *stdin, *stdout, *stderr;</samp> is executed) if the program contains the header #include &lt;stdio.h&gt;.
+      <br>The <b>scanf</b> function reads the data from <b>stdin</b>(standard input) by default, it’s the primary data source of running programs is associated with the keyboard, pre-opened for reading.
+      <br>The <b>printf</b> function outputs the data to the stdout(standard output) stream, it’s the primary target for outputting data by the running program and associated with the screen, pre-opened for writing.
+      <br><b>stderr</b> (standard error output) is associated with the screen, pre-opened for writing and regarded as the primary place where the running program should send information on the errors encountered during its work.
+      <br>By definition, the execution of any function operating on a stream sets the errno variable, with the error code identifying the reason for the failure.
+      <br>The function <b>strerror()</b> contained in <b>string.h</b>, given an error number, returns a pointer to a text describing the meaning of the error.
+      <br>i.e. <samp>printf("\nerrno = %d; Error code is: %s",errno, strerror(errno),"\n");</samp>.
+      <br><samp>int getchar(void);</samp> is same as <samp>fgetc(stdin);</samp>.
+      <br>Some <b>input built in functions</b>:
+      <ul><li> <samp>int fgetc(FILE *stream);</samp> to read a char from a file named stream, return <samp>EOF</samp> (-1) when there is no more char.
+          <br><samp>char* gets(char *str);</samp> is same as <samp>fgets(str, INT_MAX, stdin);</samp> where INT_MAX is a symbolic constant representing the maximum value of type int.
+        <li><samp>fgets(char *str, int maxsize, FILE *stream);</samp> return the value of char* str if all the max reading is successful otherwise return NULL and str keep its last value, not to be used for reading binary.
+        <li><samp>fread(void *mem, int size, int count, FILE *stream);</samp> returns the number of successfully read portions, ideal for reading binary.
+        <li><samp>fscanf(FILE *stream, const char *format, ...list of pointers to variables...);</samp> returns the number of values correctly read from the stream.
+          <br> i.e. <samp>scanf("%d", &#38;number);</samp> is same as <samp>fscanf(stdin, "%d", &#38;number);</samp>.
+      </ul>Some <b>output built in function</b>:
+      <ul><li><samp>int fputc(int chr, FILE *stream);</samp> if the function succeeds, it returns the chr character code as its result (between 0-255) or returns <samp>EOF</samp> (-1) if fails.
+          <br><samp>int putchar(int chr);</samp> is same as <samp>fputc(chr, stdout);</samp>.
+        <li><samp>fputs(char *string, FILE *stream);</samp> if the function is successful, it returns a non-negative number else returns <samp>EOF</samp>.
+          <br><samp>int puts(char *string);</samp> is same as <samp>fputs(string, stdout);</samp>
+        <li><samp>int fwrite(void *mem, int size, int count, FILE *stream);</samp> returns the number of successfully (actually) written portions, ideal for reading binary but you can use it to create text files if endline characters is  handled appropriately.
+        <li><samp>int fprintf(FILE *stream, char *format, ...list of expressions...);</samp> returns the number of characters (not values, as opposed to the fscanf function) correctly written to the stream.
+          <br><samp>printf("%d", number);</samp> is same as <samp>fprintf(stdout, "%d", number);</samp>
+      </ul>Some <b>functions to get the stream's position</b>:
+      <ul><li><samp>long ftell(FILE *stream);</samp> returns the distance (in bytes) counted from the beginning of the file to the current file position, returns EOF if any errors.
+         <li><samp>int fseek(FILE *stream, long offset, int whence);</samp> in the event of an error, the function returns <samp>EOF</samp> (-1); otherwise, the return value is 0. Whence is the reference point (beginning <b>SEEK_SET</b>, current <b>SEEK_CUR</b>, or end <b>SEEK_END</b>).
+        <li><samp>void rewind(FILE *stream);</samp> is same as <samp>fseek(stream, 0, SEEK_SET);</samp> except for the fact that rewind doesn’t return any value and it doesn't set the errno variable.
+        <li><samp>int feof(FILE *stream);</samp>  Function end of file, returns a non-zero value if the stream is in the EOF state; and otherwise, the return value is 0.</ul>
+    </div><br>
+    <div class="block shw"><h3 id="c7">7. Preprocessor and declarations</h3></div>
+    <br><img class="image" src="images/img7.jpg" alt="Intro 7"><br>
+    <div class="block shw">
+      <samp>gcc -E program_name.c</samp> in the command line causes the compiler to stop as soon as the preprocessor completes its function.
+      <br><samp>gcc -E program_name.c output_file_name</samp> in the command line preserve the preprocessed text in a file.
+      <br> The “\” character can be used in the place where the directive is broken into two lines.
+      <br><samp>#include &lt;file_name&gt;</samp> file in the compiler's default directory.
+      <br><samp>#include “file_name”</samp> file in the same directory as the file containing the directive.
+      <br><samp>#define IDENTIFIER text</samp> used to replace IDENTIFIER by text everywhere in the code. IDENTIFIER is called a <b>macro</b> and this process is a <b>macro substitution</b>.
+      <br><samp>#define identifier(parameter_list) text</samp>.
+      <br><samp>#define IDEN</samp> can be undefine as follow <samp>#undef IDEN</samp>.
+      Identifiers defined by the preprocessor itself:
+      <ul><li><samp> __LINE__</samp> integer literal equal to the line number, where the symbol appears.
+        <li><samp>__FILE__</samp> string literal containing the name of the source file in which the identifier was used.
+        <li><samp>__DATE__</samp> string literal containing text denoting the day the source file was compiled. This date string always contains 11 characters.
+        <li><samp>__TIME__</samp> string literal containing text denoting the time (hours, minutes, seconds) the source file was compiled, always  8 characters.
+        <li><samp>__STDC__</samp> identifier (as in Standard C) is defined if and only if the following statement is true: the compiler is operating in compliance with the ANSI “C” standard.
+      </ul><samp>#define GLUE(X,Y)  X##Y</samp> to concatenate X and Y.
+      <br><samp>#define QUOTE(X) #X</samp> to quote X.
+      <br>#if, #elif, #else, and #endif  directives:
+      <br><samp>#if defined(IDENT)</samp> or <samp>#ifdef IDENT</samp>
+      <br><samp>#if !defined(IDENT)</samp> or <samp>#ifndef IDENT</samp>.
+      <br><samp>gcc -D DEBUG filec.c</samp> to define an identifier (DEBUG in this case) outside the source code.
+      <br> To avoid defining a header file more than once, one should check if isn’t already defined: (in <b>header.h</b> file)
+<pre>#<code>ifndef</code> __HEADER_H__
+    #<code>define</code> __HEADER_H__
+    ....
+    (header file content)
+    ....
+#<code>endif</code></pre>
+      <b>Internal linkage</b>: each repeated identifier declaration inside one source file denotes the same object;
+      <br><b>External linkage</b>: each repeated identifier in the entire program denotes the same object;
+      <br><b>No linkage</b>: means that every declaration describes a unique object.
+      <br>Mechanism of hiding.
+      <br>The storage class: <b>extern</b>, <b>static</b> and <b>register</b>.
+      <ul><li><samp>extern</samp> specifier makes a variable accessible in another module.
+        <li><samp>static</samp> specifier means that the variable declared once is brought to life when the program starts and is destroyed when the program finishes its work. It’s opposed to auto. When the scope of the variable is the module, declared with static it can’t be extern to his module. static attribute with function means that scope is limited to the file in which its declaration occurs (internal-linkage) even if extern is used.
+      </ul>A function has an address which can be stored in a pointer <b>prt</b> declared as follow: <samp>int (*ptr)(int); prt = function;</samp> then <samp>prt(2);</samp> is the same as <samp>function(2);</samp>.
+      <br>A function can be a function argument:
+      <br><samp>int function(int (*function_argument)(int)){...}</samp>.
+    </div>
+  </article>
+</div>
+
+<hr class="shw mx-3">
+
+<footer class="bg-dark mt-1 border border-dark rounded mx-1" style="height: 50px;">
+    <div class="text-white d-flex align-items-center justify-content-center" style="height: 50px;">
+        &copy; 2020. All rights reserved.
+    </div>
+</footer>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
