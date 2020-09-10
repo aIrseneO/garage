@@ -57,4 +57,5 @@ service nginx status
 /etc/init.d/php7.3-fpm start
 /etc/init.d/php7.3-fpm status
 
+# Display latest accesses logging and errors logging to ease administration
 tail -f /var/log/nginx/access.log /var/log/nginx/error.log
