@@ -1,0 +1,37 @@
+version: '2'
+services:
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 4242:80
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_NAME=mydb
+      - WORDPRESS_DB_USER=medb
+      - WORDPRESS_DB_PASSWORD=mepw
+    networks:
+      - front-end
+      - back-end
+    depends_on:
+      - db
+  myadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 2121:80
+    networks:
+      - front-end
+      - back-end
+    depends_on:
+      - db
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_DATABASE=mydb
+      - MYSQL_USER=medb
+      - MYSQL_PASSWORD=mepw
+    networks:
+      - back-end
+networks:
+  front-end:
+  back-end:
