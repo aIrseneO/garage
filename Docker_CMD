@@ -11,6 +11,10 @@ docker images
 #	Usage: docker build [OPTIONS] PATH | URL | -
 docker build -t my_image .
 
+# Create a volume to be mount when a container is run
+#	Usage: docker volume create [OPTIONS] [VOLUME]
+docker volume create my_volume
+
 # Create a container if necessary and run command in a container
 #	Usage: docker run [OPTIONS] IMAGE_NAME [COMMAND] [ARG..]
 #	Usage: docker run --name CONTAINER_NAME -p HOST_PORT:CONTAINER_PORT -it
@@ -20,7 +24,10 @@ docker build -t my_image .
 #			-t Allocate a pseudo-TTY (Teletype), Terminal.
 #			-v Bind/link mount a volume between container and host. 
 docker run --name my_container -p 443:80 -it -v ${PWD}/.:/root/ debian:buster
-
+docker run --name my_container -p 443:80 -it --mount type=bind,source=${PWD}/.,target=/root/ debian:buster
+or
+docker run --name my_container -p 443:80 -it -v my_volume:/var/lib/mysql debian:buster
+docker run --name my_container -p 443:80 -it --mount type=volume,source=my_volume,target=/var/lib/mysql debian:buster
 # Stop one or more runnig containers
 #	Usage: docker stop [OPTIONS] CONTAINER_NAME [CONTAINER_NAME...]
 docker stop my_container
