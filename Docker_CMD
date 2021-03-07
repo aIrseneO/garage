@@ -63,6 +63,11 @@ docker rm my_container
 #	Usage: docker rmi [OPTIONS] IMAGE_NAME [IMAGE_NAME...]
 docker rmi debian:buster
 
+# Delete all containers
+docker rm -f $(docker ps -a -q)
+
+# Delete all volumes
+docker volume rm $(docker volume ls -q)
 # DOCKER HUB
 
 # Log in to a Docker registry. Daemon provides a default SERVER if unspecified
@@ -80,3 +85,7 @@ docker push HUB_Username/my_container
 # Log out from a Docker registry
 #	Usage:	docker logout [SERVER]
 docker logout
+
+
+# History of an image execution
+docker history my_image --no-trunc $argv | tac | tr -s ' ' | cut -d " " -f 5- | sed 's,^/bin/sh -c #(nop) ,,g' | sed 's,^/bin/sh -c,RUN,g' | sed 's, && ,\n & ,g' | sed 's,\s*[0-9]*[\.]*[0-9]*[kMG]*B\s*$,,g' | head -n -1
