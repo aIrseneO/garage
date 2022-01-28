@@ -1,0 +1,10 @@
+$TTL	604800
+@	IN	SOA	localhost. admin.myserver.com. (
+			      1		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@		IN	NS	localhost.
+$GENERATE 1-200 $.0 IN PTR web$.myserver.com.

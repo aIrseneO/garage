@@ -1,0 +1,7 @@
+[daemon]
+	uploadpack = true
+	uploadarch = true
+[receive]
+	denyCurrentBranch = refuse
+[core]
+	bare = true

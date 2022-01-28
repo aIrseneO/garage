@@ -1,0 +1,15 @@
+[Unit]
+Description=Remote desktop service (VNC) on port :%i
+After=network.target syslog.target
+
+[Service]
+Type=forking
+#PIDFile=    Recommanded when using Type=forking, man systemd.service
+User=__user__
+ExecStartPre=/usr/bin/vncserver -kill :%i
+ExecStart=/usr/bin/vncserver -localhost no -verbose :%i
+ExecStop=/usr/bin/vncserver -kill :%i
+
+[Install]
+WantedBy=multi-user.target
+Alias=vncserver@%i.service

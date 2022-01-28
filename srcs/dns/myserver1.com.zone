@@ -1,0 +1,13 @@
+$TTL	42S
+@	IN	SOA	localhost. admin.myserver.com. (
+			      2		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+						IN	NS		localhost.
+web.myserver.com.		IN	A		192.168.40.10
+mail.myserver.com.		IN	A		192.168.40.11
+other.myserver.com.		IN	CNAME	web.myserver.com.
+$GENERATE 1-200 web$.myserver.com. IN A 192.168.40.$
