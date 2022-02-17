@@ -10,9 +10,9 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
 RUN apt-get update && apt-get install -y docker-ce-cli
 USER jenkins
 RUN jenkins-plugin-cli --plugins "blueocean:1.25.2 docker-workflow:1.28 \
-kubernetes:latest configuration-as-code:latest credentials:latest \
-git:latest git-client:latest github:latest github-oauth:latest slack:latest \
-github-oauth:latest"
+global-slack-notifier:latest kubernetes:latest configuration-as-code:latest \
+credentials:latest git:latest git-client:latest github:latest \
+github-oauth:latest github-oauth:latest"
 #	pipeline-model-definition:latest thinBackup:latest \
 #	workflow-aggregator:latest ssh-slaves:latest ssh-agent:latest \
 #	jdk-tool:latest command-launcher:latest  \
