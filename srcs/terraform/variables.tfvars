@@ -1,0 +1,1 @@
+content = "Ron∂ldo From variables.tfvars"
