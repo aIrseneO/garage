@@ -23,5 +23,9 @@
 #	git clone _user_@server/root/GitShared/myworkdir /workdir
 #	git clone https://server/GitShared/myworkdir /workdir
 #
+#   git tag 1.0.0
+#	git push --tags
+#	git push origin 1.0.0
+#
 # Install:
 #			git

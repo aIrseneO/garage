@@ -9,7 +9,8 @@
 # CLIENT
 #   Create role (vm):
 #       ansible-galaxy role init vm
-#       ansible-galaxy role import airseneo ansible-role-vm --token <token>
+#       ansible-galaxy role import airseneo ansible-role-vm --token <token> -v
+#       ansible-galaxy role delete --token <token> -v airseneo ansible-role-vm
 #
 #
 # Install:
