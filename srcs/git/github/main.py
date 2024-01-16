@@ -12,38 +12,91 @@ import os
 import json
 from github import Github
 from github import Auth
+from git import Repo
+import logging
 
-if "GITHUB_TOKEN" in os.environ:
-    ACCESS_TOKEN = os.getenv("GITHUB_TOKEN")
-else:
-    raise Exception("GITHUB_TOKEN environment variable not set.")
+logging.basicConfig(level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s')
 
-def getReposPerOrgs() -> dict:
+PWD = os.getcwd()
+
+WORKDIR = f"{ os.path.expanduser('~')}/workdir"
+
+def getGithubObj() -> Github:
+    if "GITHUB_TOKEN" in os.environ:
+        ACCESS_TOKEN = os.getenv("GITHUB_TOKEN")
+    else:
+        logging.error("'GITHUB_TOKEN' environment variable not set.")
+        return None
+
     try:
         auth = Auth.Token(ACCESS_TOKEN)
         githubObj = Github(auth = auth)
-        user = githubObj.get_user()
-        
-        myRepos = {}
-        for org in user.get_orgs():
-            myRepos[org.login] = [repo.name for repo in org.get_repos()]
-            # myRepos[org.login] = []
-            # for repo in org.get_repos():
-            #     myRepos[org.login].append(repo.name)
+    except Exception as e:
+        logging.exception("Github auth fialed: {}".format(e))
+        return None
+    return githubObj
 
-        myRepos[user.login] = [repo.name for repo in user.get_repos() 
+def getRepos(githubObj: Github) -> dict:
+    orgsRepositories = {}
+    if githubObj == None:
+        return {}
+    
+    try:
+        user = githubObj.get_user()
+        for org in user.get_orgs():
+            orgsRepositories[org.login] = [repo.name for repo in org.get_repos()]
+            # orgsRepositories[org.login] = []
+            # for repo in org.get_repos():
+            #     orgsRepositories[org.login].append(repo.name)
+
+        orgsRepositories[user.login] = [repo.name for repo in user.get_repos() 
                                 if repo.full_name.startswith(user.login + "/")]
-        # myRepos[user.login] = []
+        # orgsRepositories[user.login] = []
         # for repo in user.get_repos():
         #     if repo.full_name.startswith(user.login + "/"):
-        #         myRepos[user.login].append(repo.name)
+        #         orgsRepositories[user.login].append(repo.name)
     except Exception as e:
-        print("Error getting repos: {}".format(e))
-    finally:
-        if githubObj:
-            githubObj.close()
-    return myRepos
+        logging.exception("Error getting repos: {}".format(e))
+    return orgsRepositories
 
+def createWorkplace(
+        orgsRepositories: dict = {},
+        githubObj: Github = None,
+        directory: str = PWD,
+        orgsExcluded: list = []) -> int:
+    try:
+        for orgName, reposName in orgsRepositories.items():
+            if orgName not in orgsExcluded:
+                orgLocalDir = f"{ directory }/{ orgName }"
+                os.makedirs(name = orgLocalDir, mode = 0o775, exist_ok = True)
+                os.chmod(orgLocalDir, 0o775)
+                if githubObj == None:
+                    continue
+                for repoName in reposName:
+                    Repo.clone_from(
+                        githubObj.get_repo(f"{ orgName }/{ repoName }").clone_url,
+                        f"{ orgLocalDir }/{ repoName }"
+                    )
+                    logging.info("Repository '{}/{}' cloned.".format(orgName, repoName))
+    except Exception as e:
+        logging.exception("Error Creating workpalce: {}".format(e))
+        return 1
+    return 0
 
 if __name__ == '__main__':
-    print(json.dumps(getReposPerOrgs(), indent = 2))
+
+    githubObj = getGithubObj()
+
+    orgsRepositories = getRepos(githubObj)
+    # print(json.dumps(repos, indent = 2))
+
+    createWorkplace(
+        orgsRepositories = orgsRepositories,
+        githubObj = githubObj,
+        directory = WORKDIR,
+        orgsExcluded = ["42-ready-player-hackathon"]
+    )
+
+    if githubObj != None:
+        githubObj.close()
