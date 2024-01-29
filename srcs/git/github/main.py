@@ -74,6 +74,9 @@ def createWorkplace(
                 if githubObj == None:
                     continue
                 for repoName in reposName:
+                    if (os.path.isdir(f"{ orgLocalDir }/{ repoName }")):
+                        logging.info("Repository '{}/{}' exists already.".format(orgName, repoName))
+                        continue
                     Repo.clone_from(
                         githubObj.get_repo(f"{ orgName }/{ repoName }").clone_url,
                         f"{ orgLocalDir }/{ repoName }"
