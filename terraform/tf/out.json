@@ -1,0 +1,228 @@
+providers.tf
+{
+  "terraform": [
+    {
+      "required_providers": [
+        {
+          "aws": {
+            "source": "hashicorp/aws",
+            "version": "~> 4.0"
+          }
+        }
+      ]
+    }
+  ],
+  "provider": [
+    {
+      "aws": {
+        "shared_config_files": [
+          "$HOME/.aws/config"
+        ],
+        "shared_credentials_files": [
+          "$HOME/.aws/credentials"
+        ],
+        "profile": "default"
+      }
+    }
+  ]
+}
+variable.tf
+{}
+output.tf
+{
+  "output": [
+    {
+      "instance_ip": {
+        "description": "Instance IP",
+        "value": "${try(aws_instance.iodevopens-instance.public_dns, \"\")}"
+      }
+    }
+  ]
+}
+main.tf
+{
+  "resource": [
+    {
+      "aws_vpc": {
+        "relay-vpc": {
+          "cidr_block": "172.16.0.0/16",
+          "instance_tenancy": "default",
+          "enable_dns_hostnames": true,
+          "tags": {
+            "Name": "relay-vpc",
+            "Manage": "terraform"
+          }
+        }
+      }
+    },
+    {
+      "aws_subnet": {
+        "relay-public-subnet": {
+          "tags": {
+            "Name": "relay-public-subnet",
+            "Manage": "terraform"
+          },
+          "availability_zone": "us-east-1a",
+          "cidr_block": "172.16.1.0/24",
+          "vpc_id": "${aws_vpc.relay-vpc.id}",
+          "map_public_ip_on_launch": "true"
+        }
+      }
+    },
+    {
+      "aws_internet_gateway": {
+        "relay-igw": {
+          "vpc_id": "${aws_vpc.relay-vpc.id}",
+          "tags": {
+            "Name": "relay-igw",
+            "Manage": "terraform"
+          }
+        }
+      }
+    },
+    {
+      "aws_route_table": {
+        "relay-crt": {
+          "vpc_id": "${aws_vpc.relay-vpc.id}",
+          "route": [
+            {
+              "cidr_block": "0.0.0.0/0",
+              "gateway_id": "${aws_internet_gateway.relay-igw.id}"
+            }
+          ],
+          "tags": {
+            "Name": "relay-crt",
+            "Manage": "terraform"
+          }
+        }
+      }
+    },
+    {
+      "aws_route_table_association": {
+        "relay-crta-public-subnet": {
+          "subnet_id": "${aws_subnet.relay-public-subnet.id}",
+          "route_table_id": "${aws_route_table.relay-crt.id}"
+        }
+      }
+    },
+    {
+      "aws_security_group": {
+        "relay-sg": {
+          "vpc_id": "${aws_vpc.relay-vpc.id}",
+          "ingress": [
+            {
+              "description": "SSH to VPC",
+              "from_port": 22,
+              "to_port": 22,
+              "protocol": "tcp",
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "ipv6_cidr_blocks": [
+                "::/0"
+              ]
+            },
+            {
+              "description": "HTTP to VPC",
+              "from_port": 80,
+              "to_port": 80,
+              "protocol": "tcp",
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "ipv6_cidr_blocks": [
+                "::/0"
+              ]
+            },
+            {
+              "description": "HTTP to VPC",
+              "from_port": 8080,
+              "to_port": 8080,
+              "protocol": "tcp",
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "ipv6_cidr_blocks": [
+                "::/0"
+              ]
+            },
+            {
+              "description": "TLS to VPC",
+              "from_port": 443,
+              "to_port": 443,
+              "protocol": "tcp",
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "ipv6_cidr_blocks": [
+                "::/0"
+              ]
+            }
+          ],
+          "egress": [
+            {
+              "description": "Allow outgoing traffic",
+              "from_port": 0,
+              "to_port": 0,
+              "protocol": "-1",
+              "cidr_blocks": [
+                "0.0.0.0/0"
+              ],
+              "ipv6_cidr_blocks": [
+                "::/0"
+              ]
+            }
+          ],
+          "tags": {
+            "Name": "relay-sg"
+          }
+        }
+      }
+    },
+    {
+      "aws_network_interface": {
+        "relay-ni": {
+          "subnet_id": "${aws_subnet.relay-public-subnet.id}",
+          "private_ips": [
+            "172.16.1.100"
+          ],
+          "tags": {
+            "Name": "relay-ni"
+          }
+        }
+      }
+    },
+    {
+      "aws_key_pair": {
+        "relay-key": {
+          "key_name": "relay-key",
+          "public_key": "${file(\"/root/.ssh/id_rsa.pub\")}"
+        }
+      }
+    },
+    {
+      "aws_instance": {
+        "iodevopens-instance": {
+          "tags": {
+            "Name": "relay-instance"
+          },
+          "ami": "ami-00beae93a2d981137",
+          "instance_type": "t2.micro",
+          "key_name": "${aws_key_pair.relay-key.id}",
+          "subnet_id": "${aws_subnet.relay-public-subnet.id}",
+          "vpc_security_group_ids": [
+            "${aws_security_group.relay-sg.id}"
+          ],
+          "root_block_device": [
+            {
+              "volume_size": 10,
+              "volume_type": "gp2",
+              "encrypted": false,
+              "delete_on_termination": true
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

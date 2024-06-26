@@ -1,0 +1,4 @@
+tfparse
+matplotlib
+python-hcl2
+networkx
