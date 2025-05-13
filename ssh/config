@@ -1,32 +1,5 @@
-host hp
-hostname 192.168.0.25
-user facko
-ForwardX11 yes
-
-host idea
-hostname 192.168.0.23
-user facko
-ForwardX11 yes
-
-host dell
-hostname 192.168.0.15
-user facko
-ForwardX11 yes
-
-host v1
-hostname 192.168.40.10
-user vagrant
-ForwardX11 yes
-
-host v2
-hostname 192.168.40.11
-user vagrant
-ForwardX11 yes
-
-host v3
-hostname 192.168.40.12
-user vagrant
-ForwardX11 yes
-
-host *
-ForwardX11 no
+host sshserver
+    hostname 127.0.0.1
+    user garage
+    ForwardX11 yes
+    Port 2222

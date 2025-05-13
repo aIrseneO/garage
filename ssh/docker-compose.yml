@@ -1,0 +1,16 @@
+services:
+  sshserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sshserver
+    hostname: sshserver
+    image: garage/sshserver:local
+    restart: unless-stopped
+    # volumes:
+    #   - type: volume
+    #     source: gitea_data
+    #     target: /data
+    #     volume: {}
+    ports:
+      - "127.0.0.1:2222:22"
