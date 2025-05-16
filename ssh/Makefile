@@ -6,3 +6,5 @@ stop-server:
 
 ssh-client:
 				@ssh -F ./config sshserver
+
+clean:			stop-server
