@@ -1,0 +1,47 @@
+services:
+  mcpserver:
+    build:
+      context: server
+      dockerfile: Dockerfile
+    container_name: mcpserver
+    image: local/mcpserver:latest
+    hostname: mcpserver
+    networks:
+      mcpnetwork: null
+    ports:
+      - mode: ingress
+        target: 8000
+        published: 8000
+        protocol: tcp
+      - mode: ingress
+        target: 8082
+        published: 8082
+        protocol: tcp
+      - mode: ingress
+        target: 8090
+        published: 8090
+        protocol: tcp
+    restart: unless-stopped
+    user: weather
+
+  mcpinstpector:
+    container_name: mcpinstpector
+    image: mcp/inspector:latest
+    hostname: mcpinstpector
+    networks:
+      mcpnetwork: null
+    ports:
+      - mode: ingress
+        target: 3000
+        published: 3000
+        protocol: tcp
+      - mode: ingress
+        target: 5173
+        published: 5173
+        protocol: tcp
+    restart: unless-stopped
+
+networks:
+  mcpnetwork:
+    name: mcpnetwork
+    external: false

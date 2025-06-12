@@ -1,0 +1,44 @@
+services:
+  mcpserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcpserver
+    image: local/mcpserver:latest
+    hostname: mcpserver
+    ports:
+      - mode: ingress
+        target: 8000
+        published: 8000
+        protocol: tcp
+      - mode: ingress
+        target: 8082
+        published: 8082
+        protocol: tcp
+      - mode: ingress
+        target: 8090
+        published: 8090
+        protocol: tcp
+    restart: unless-stopped
+    user: weather
+
+  mcpserver_dev:
+    image: local/mcpserver:latest
+    profiles: ["dev"]
+    entrypoint: ["bash"]
+    command: []
+    stdin_open: true
+    tty: true
+    ports:
+      - "8200:8000"
+      - "8282:8082"
+      - "8290:8090"
+    container_name: mcpserver_dev
+    hostname: mcpserver_dev
+    restart: no
+    user: weather
+    working_dir: /app
+    volumes:
+      - type: bind
+        source: .
+        target: /app
