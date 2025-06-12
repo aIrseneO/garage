@@ -24,10 +24,10 @@ services:
     restart: unless-stopped
     user: weather
 
-  mcpinstpector:
-    container_name: mcpinstpector
+  mcpinspector:
+    container_name: mcpinspector
     image: mcp/inspector:latest
-    hostname: mcpinstpector
+    hostname: mcpinspector
     networks:
       mcpnetwork: null
     ports:
