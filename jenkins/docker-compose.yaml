@@ -1,48 +1,105 @@
-version: '3.8'
-
-networks:
-  jenkins:
-    driver: bridge
-
-volumes:
-  jenkins-docker-certs:
-  jenkins-data:
-
 services:
   jenkins:
-    image: my-jenkins-blueocean:1.1
     build:
-      context: .
+      context: jenkins
       dockerfile: Dockerfile
+    container_name: jenkins
+    depends_on:
+      docker:
+        condition: service_started
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: 1
+    hostname: jenkins
+    image: garage/jenkins:latest
+    networks:
+      jenkins: null
     ports:
       - 8080:8080
       - 50000:50000
-    environment:
-      - DOCKER_HOST=tcp://docker:2376
-      - DOCKER_CERT_PATH=/certs/client
-      - DOCKER_TLS_VERIFY=1
-    networks:
-      - jenkins
-    hostname: jenkins
     restart: always
     volumes:
       - jenkins-data:/var/jenkins_home
       - jenkins-docker-certs:/certs/client:ro
-    depends_on:
-      - docker
 
   docker:
+    container_name: docker
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    hostname: docker
     image: docker:dind
+    networks:
+      jenkins: null
     ports:
       - 2376:2376
-    environment:
-      - DOCKER_TLS_CERTDIR=/certs
-    networks:
-      - jenkins
     privileged: true
-    hostname: docker
     restart: always
     volumes:
       - jenkins-docker-certs:/certs/client
       - jenkins-data:/var/jenkins_home
 
+  gitlab:
+    container_name: gitlab
+    environment:
+      GITLAB_ROOT_PASSWORD: h0meL@b69
+    hostname: gitlab
+    image: gitlab/gitlab-ce:17.10.3-ce.0
+    ports:
+      - 80:80
+      - 443:443
+      - 2222:22
+    networks:
+      jenkins: null
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: gitlab_config
+        target: /etc/gitlab
+        volume: {}
+      - type: volume
+        source: gitlab_data
+        target: /var/opt/gitlab
+        volume: {}
+      - type: volume
+        source: gitlab_logs
+        target: /var/log/gitlab
+        volume: {}
+
+  mcpgitlab:
+    build:
+      context: mcpgitlab
+      dockerfile: Dockerfile
+      args:
+        GITLAB_API_URL: http://gitlab/api/v4
+        GITLAB_PERSONAL_ACCESS_TOKEN: ${GITLAB_PERSONAL_ACCESS_TOKEN:?}
+    environment:
+      GITLAB_API_URL: http://gitlab/api/v4
+      GITLAB_PERSONAL_ACCESS_TOKEN: ${GITLAB_PERSONAL_ACCESS_TOKEN:?}
+    image: garage/jenkins:mcpgitlab
+    networks:
+      jenkins: null
+    container_name: mcpgitlab
+    hostname: mcpgitlab
+    restart: always
+
+volumes:
+  gitlab_data:
+    name: jenkins_gitlab_data
+    driver: local
+  gitlab_config:
+    name: jenkins_gitlab_config
+    driver: local
+  gitlab_logs:
+    name: jenkins_gitlab_logs
+    driver: local
+  jenkins-docker-certs:
+    name: jenkins_docker_certs
+    driver: local
+  jenkins-data:
+    name: jenkins_data
+    driver: local
+
+networks:
+  jenkins:
+    driver: bridge

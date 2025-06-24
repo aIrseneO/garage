@@ -11,3 +11,8 @@ alais jc='docker run --rm --network host -v $PWD/local:/jenkins openjdk java -ja
 
 docker run --rm --network host -v $PWD/local:/jenkins openjdk java -jar /jenkins/jenkins-cli.jar -s http://192.168.1.112:30070/ -auth admin:<API token> -webSocket list-jobs
 ```
+
+```bash
+docker build -t airseneo/jenkins:latest .
+docker push airseneo/jenkins
+```

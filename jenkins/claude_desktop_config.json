@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "gitlab": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--network=jenkins_jenkins",
+        "--rm",
+        "garage/jenkins:mcpgitlab"
+      ]
+    }
+  }
+}
